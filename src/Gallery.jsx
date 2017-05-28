@@ -12,7 +12,7 @@ type GalleryState = {
 
 class Gallery extends Component {
   state: GalleryState;
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       playingUrl: '',
@@ -20,9 +20,9 @@ class Gallery extends Component {
       playing: false
     }
   }
-  playAudio(previewUrl){
+  playAudio(previewUrl) {
     let audio = new Audio(previewUrl);
-    if (!this.state.playing){
+    if (!this.state.playing) {
       audio.play();
       this.setState({
         playingUrl: previewUrl,
@@ -48,37 +48,39 @@ class Gallery extends Component {
     }
   }
   render() {
-    const { tracks } = this.props;   /* tożsame z const tracks = this.props.tracks;*/
+    const tracks: Array<Track> = this.props.tracks; // const { tracks } = this.props;   /* tożsame z const tracks = this.props.tracks;*/
     return (
       <div>
-        {tracks.map((track, k) => {
-          const trackImg = track.album.images[0].url;
-          return (
-            <div
-            key={k}
-            className="track"
-            onClick={() => this.playAudio(track.preview_url)}
-          >
-            <img
-              src={trackImg}
-              className="track-img"
-              alt="track"
-            />
-            <div className="track-play">
-              <div className="track-play-inner">
-                {
-                  this.state.playingUrl === track.preview_url && this.state.playing
-                  ? <Glyphicon glyph="stop"></Glyphicon>
-                  : <Glyphicon glyph="play"></Glyphicon>
-                }
+        {
+          tracks.map((track: Track, k: number) => {
+            const trackImg = track.album.images[0].url;
+            return (
+              <div
+                key={k}
+                className="track"
+                onClick={() => this.playAudio(track.preview_url)}
+              >
+                <img
+                  src={trackImg}
+                  className="track-img"
+                  alt="track"
+                />
+                <div className="track-play">
+                  <div className="track-play-inner">
+                    {
+                      this.state.playingUrl === track.preview_url && this.state.playing
+                        ? <Glyphicon glyph="stop"></Glyphicon>
+                        : <Glyphicon glyph="play"></Glyphicon>
+                    }
+                  </div>
+                </div>
+                <p className="track-text">
+                  {track.name}
+                </p>
               </div>
-            </div>
-            <p className="track-text">
-              {track.name}
-            </p>
-          </div>
-        )
-        })}
+            )
+          })
+        }
       </div>
     )
   }

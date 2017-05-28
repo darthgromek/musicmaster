@@ -3,5 +3,6 @@
 [include]
 
 [libs]
+src/typings.js
 
 [options]
